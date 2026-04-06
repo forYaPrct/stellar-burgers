@@ -13,6 +13,7 @@ interface IUser {
   user: TUser | null;
   isLogin: boolean;
   isLoading: boolean;
+  isAuthChecked: boolean;
   error: string | undefined;
 }
 
@@ -20,6 +21,7 @@ const initialState: IUser = {
   user: null,
   isLogin: false,
   isLoading: false,
+  isAuthChecked: false,
   error: undefined
 };
 
@@ -106,9 +108,21 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.isLogin = true;
       })
+      .addCase(getUserData.pending, (state) => {
+        state.isLoading = true;
+        state.isAuthChecked = false;
+      })
       .addCase(getUserData.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        state.isLoading = false;
         state.isLogin = true;
+        state.isAuthChecked = true;
+      })
+      .addCase(getUserData.rejected, (state) => {
+        state.isLoading = false;
+        state.isLogin = false;
+        state.isLoading = false;
+        state.isAuthChecked = true;
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.user = null;
