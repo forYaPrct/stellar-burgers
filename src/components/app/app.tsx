@@ -32,9 +32,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (getCookie('accessToken')) {
-      dispatch(getUserData());
-    }
+    dispatch(getUserData());
     dispatch(getIngredients());
     dispatch(getFeed());
   }, [dispatch]);
