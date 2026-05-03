@@ -3,3 +3,14 @@ node_modules
 .idea
 dist
 storybook-static/
+
+coverage/
+.jest/
+jest-html-reporters-*.html
+npm-debug.log*
+
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+node_modules/.cache/Cypress
+cypress.env.json
