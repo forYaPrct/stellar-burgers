@@ -17,12 +17,11 @@ const ingredients: TIngredient[] = [
   }
 ];
 
+const fakeId = 'testId';
+
 describe('ingredients reducer', () => {
   it('при начале запроса устанавливается флаг isLoading в true', () => {
-    const state = ingredientsReducer(
-      undefined,
-      getIngredients.pending('fakeId')
-    );
+    const state = ingredientsReducer(undefined, getIngredients.pending(fakeId));
 
     expect(state.isLoading).toBe(true);
     expect(state.error).toBeUndefined();
@@ -31,7 +30,7 @@ describe('ingredients reducer', () => {
   it('при успешном запросе записываются ингредиенты в store и устанавливается флаг isLoading в false', () => {
     const state = ingredientsReducer(
       undefined,
-      getIngredients.fulfilled(ingredients, 'fakeId')
+      getIngredients.fulfilled(ingredients, fakeId)
     );
 
     expect(state.isLoading).toBe(false);
@@ -44,7 +43,7 @@ describe('ingredients reducer', () => {
 
     const state = ingredientsReducer(
       undefined,
-      getIngredients.rejected(error, 'fakeId')
+      getIngredients.rejected(error, fakeId)
     );
 
     expect(state.isLoading).toBe(false);

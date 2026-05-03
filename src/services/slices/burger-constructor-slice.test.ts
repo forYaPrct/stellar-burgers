@@ -48,11 +48,16 @@ const sauce: TIngredient = {
   image_large: 'https://code.s3.yandex.net/react/code/sauce-04-large.png'
 };
 
+const addTestIngredients = () => {
+  let state = burgerConstructoReducer(undefined, addIngredient(bun));
+  state = burgerConstructoReducer(state, addIngredient(main));
+  state = burgerConstructoReducer(state, addIngredient(sauce));
+  return state;
+};
+
 describe('burgerConstructo reducer', () => {
   test('добавление ингредиентов', () => {
-    let state = burgerConstructoReducer(undefined, addIngredient(bun));
-    state = burgerConstructoReducer(state, addIngredient(main));
-    state = burgerConstructoReducer(state, addIngredient(sauce));
+    let state = addTestIngredients();
 
     expect(state.bun?.name).toBe(bun.name);
     expect(state.ingredients).toHaveLength(2);
@@ -61,9 +66,8 @@ describe('burgerConstructo reducer', () => {
   });
 
   test('удаление ингредиента по id', () => {
-    let state = burgerConstructoReducer(undefined, addIngredient(bun));
-    state = burgerConstructoReducer(state, addIngredient(main));
-    state = burgerConstructoReducer(state, addIngredient(sauce));
+    let state = addTestIngredients();
+
     const sauceId = state.ingredients[0].id;
     state = burgerConstructoReducer(state, deleteIngredient(sauceId));
 
@@ -71,9 +75,7 @@ describe('burgerConstructo reducer', () => {
   });
 
   test('изменение порядка ингредиентов', () => {
-    let state = burgerConstructoReducer(undefined, addIngredient(bun));
-    state = burgerConstructoReducer(state, addIngredient(main));
-    state = burgerConstructoReducer(state, addIngredient(sauce));
+    let state = addTestIngredients();
     state = burgerConstructoReducer(state, addIngredient(sauce));
     state = burgerConstructoReducer(state, addIngredient(main));
     const ingredientId0 = state.ingredients[0].id;
